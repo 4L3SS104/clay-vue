@@ -50,7 +50,7 @@
             transition: width 0.2s ease;
             border-radius: var(--clay-border-radius);
             z-index: 0;
-            @include mixins.clay-shadow-puff($intensity: 0.1);
+            @include mixins.clay-shadow-puff($intensity: 0.1); // il puff dev'essere bianco.
 
             &::before
             {

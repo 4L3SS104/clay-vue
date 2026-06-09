@@ -17,6 +17,7 @@
         --clay-checkbox-color-off: oklch(from var(--clay-light-color) calc(l - 0.15) c h);
         --clay-checkbox-color-on: var(--clay-primary-color);
         --clay-checkbox-color-shadow: oklch(from var(--black) calc(l - 0.25) c h);
+        --clay-checkbox-color-outline: oklch(from var(--clay-primary-color) l c calc(h + 180));
 
         --clay-checkbox-size: 1.5em;
         --clay-checkbox-roundness: 0.375em;
@@ -50,9 +51,9 @@
             position: absolute;
             right: 0;
             top: 0;
-            transition: background-color var(--clay-ease-duration) var(--clay-ease-function);
             transition: background-color var(--clay-ease-duration) var(--clay-ease-function),
-                        box-shadow var(--clay-ease-duration) var(--clay-ease-function);
+                        box-shadow var(--clay-ease-duration) var(--clay-ease-function),
+                        transform var(--clay-ease-duration) var(--clay-ease-function);
             z-index: 0;
             @include mixins.clay-shadow-elevation($color: var(--clay-checkbox-color-shadow), $intensity: 0.25);
 
@@ -78,6 +79,14 @@
         .clay-checkbox__input:checked + .clay-checkbox__checkmark
         {
             background-color: var(--clay-checkbox-color-on);
+        }
+
+        .clay-checkbox__input:focus-visible + .clay-checkbox__checkmark
+        {
+            box-shadow: functions.clay-outline($color: var(--clay-checkbox-color-outline), $width: 0.15em),
+                        0 0.25em 0.25em 0 rgba(from var(--clay-checkbox-color-shadow) r g b / 0.333);
+
+            transform: translateY(-0.0625em) scale(1.1);
         }
 
         &:hover .clay-checkbox__checkmark

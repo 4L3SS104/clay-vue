@@ -50,7 +50,7 @@
             transition: width 0.2s ease;
             border-radius: var(--clay-border-radius);
             z-index: 0;
-            @include mixins.clay-shadow-puff($intensity: 0.1); // il puff dev'essere bianco.
+            @include mixins.clay-shadow-puff($intensity: 0.1);
 
             &::before
             {
@@ -73,8 +73,8 @@
         {
             --clay-progress-bar-background-color: oklch(from var(--clay-light-color) calc(l - 0.35) c h);
             --clay-progress-bar-indicator-color-shadow-background:
-                inset 0 0.25em 0.25em 0 rgba(from var(--white) r g b / 0.15);
-            --clay-progress-bar-shadow-color: oklch(from var(--white) calc(l - 0.35) c h);
+                inset 0 0.25em 0.25em 0 rgba(from var(--black) r g b / 0.15);
+            // --clay-progress-bar-shadow-color: oklch(from var(--white) calc(l - 0.35) c h);
         }
     }
 </style>

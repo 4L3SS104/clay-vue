@@ -45,7 +45,7 @@ export const Default: StoryObj<StoryArgs> = {
     render: (args: StoryArgs) => ({
         components: { ClayProgressBar },
         setup: () => ({ args }),
-        template: `<ClayProgressBar v-bind="args" />`
+        template: `<ClayProgressBar v-bind="args" style="max-width: 300px;" />`
     })
 };
 

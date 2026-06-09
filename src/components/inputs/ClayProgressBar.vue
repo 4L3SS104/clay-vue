@@ -50,10 +50,10 @@
             pointer-events: none;
             position: absolute;
             top: 0;
-            transition: width 0.2s ease;
+            transition: width 0.1s ease;
             width: var(--_w, 0%);
             z-index: 1;
-            @include mixins.clay-shadow-elevation($intensity: 0.5);
+            @include mixins.clay-shadow-elevation($intensity: 1);
         }
 
         &__track // background dove la progress bar si muove
@@ -76,7 +76,7 @@
             position: absolute;
             height: 100%;
             background-color: var(--clay-progress-bar-indicator-color);
-            transition: width 0.2s ease;
+            transition: width 0.1s ease;
             border-radius: var(--clay-border-radius);
             z-index: 0;
 

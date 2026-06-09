@@ -1,10 +1,13 @@
-<script lang="ts">
+<script lang="ts" setup>
+    import FontAwesome from "../core/FontAwesome.vue";
 </script>
 
 <template>
     <label class="clay-checkbox">
         <input type="checkbox" class="clay-checkbox__input" />
-        <span class="clay-checkbox__checkmark"></span>
+        <span class="clay-checkbox__checkmark">
+            <FontAwesome icon="check" />
+        </span>
     </label>
 </template>
 

@@ -34,7 +34,7 @@
         position: relative;
         width: var(--clay-checkbox-size);
 
-        .clay-checkbox__input // mantiene l'input nativo però è nascosto visivamente.
+        .clay-checkbox__input
         {
             height: 0;
             opacity: 0;
@@ -42,8 +42,9 @@
             width: 0;
         }
 
-        .clay-checkbox__checkmark // la mai checkbox personalizzata.
+        .clay-checkbox__checkmark
         {
+            align-items: center;
             background-color: var(--clay-checkbox-color-off);
             background-image: linear-gradient(rgba(from var(--white) r g b / 0.25),
             rgba(from var(--black) r g b / 0.125));
@@ -57,6 +58,15 @@
             transition: background-color var(--clay-ease-duration) var(--clay-ease-function),
                         box-shadow var(--clay-ease-duration) var(--clay-ease-function),
                         transform var(--clay-ease-duration) var(--clay-ease-function);
+
+            .fa
+            {
+                color: var(--white);
+                opacity: 0;
+                transition: opacity var(--clay-ease-duration) var(--clay-ease-function),
+                            transform var(--clay-ease-duration) var(--clay-ease-function);
+                transform: scale(0.5);
+            }
             z-index: 0;
             @include mixins.clay-shadow-elevation($color: var(--clay-checkbox-color-shadow), $intensity: 0.25);
 
@@ -82,6 +92,12 @@
         .clay-checkbox__input:checked + .clay-checkbox__checkmark
         {
             background-color: var(--clay-checkbox-color-on);
+
+            .fa
+            {
+                opacity: 1;
+                transform: scale(1);
+            }
         }
 
         .clay-checkbox__input:focus-visible + .clay-checkbox__checkmark
@@ -89,7 +105,7 @@
             box-shadow: functions.clay-outline($color: var(--clay-checkbox-color-outline), $width: 0.15em),
                         0 0.25em 0.25em 0 rgba(from var(--clay-checkbox-color-shadow) r g b / 0.333);
 
-            transform: translateY(-0.0625em) scale(1.1);
+            transform: translateY(-0.075em) scale(1.1);
         }
 
         &:hover .clay-checkbox__checkmark

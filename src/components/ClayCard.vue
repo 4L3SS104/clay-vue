@@ -10,11 +10,16 @@
         glass: {
             default: false,
             type: Boolean
+        },
+        liquid: {
+            default: false,
+            type: Boolean
         }
     });
 
     const classes = computed((): Record<string, boolean> => ({
         "clay-card--glass": props.glass,
+        "clay-card--liquid": props.liquid,
 
         "clay-card--elevation-none": props.elevation === "none",
         "clay-card--elevation-low": props.elevation === "low",
@@ -106,6 +111,35 @@
                 @include mixins.clay-shadow-puff($intensity: 0.5, $color: var(--clay-card-color-shadow));
             }
         }
+
+        &.clay-card--liquid
+        {
+            --clay-card-color-background: var(--white);
+            --clay-card-color-shadow: oklch(from var(--clay-primary-color) calc(l - 0.40) c h);
+
+            --clay-card-blur: 0.375em;
+            --clay-card-opacity: 0.1;
+
+            background-image: linear-gradient(135deg,
+                                              rgba(from var(--white) r g b / 0.45) 0%,
+                                              rgba(from var(--white) r g b / 0.08) 40%,
+                                              rgba(from var(--white) r g b / 0) 65%);
+            background-blend-mode: normal;
+            backdrop-filter: blur(var(--clay-card-blur)) saturate(200%) brightness(1.15);
+            border: 0.0625em solid rgba(from var(--white) r g b / 0.45);
+
+            &::before
+            {
+                background-image: radial-gradient(140% 90% at 12% -10%,
+                                                  rgba(from var(--white) r g b / 0.6),
+                                                  transparent 55%);
+
+                box-shadow: inset 0.0625em 0.0625em 0.125em rgba(from var(--white) r g b / 0.7),
+                            inset -0.0625em -0.0625em 0.125em rgba(from var(--black) r g b / 0.18);
+
+                mix-blend-mode: screen;
+            }
+        }
     }
 
     @media (prefers-color-scheme: dark)
@@ -127,6 +161,13 @@
             {
                 --clay-card-color-background: var(--clay-dark-color);
                 --clay-card-color-shadow: var(--black);
+            }
+
+            &.clay-card--liquid
+            {
+                --clay-card-color-shadow: var(--black);
+
+                border-color: rgba(from var(--white) r g b / 0.18);
             }
         }
     }

@@ -62,4 +62,20 @@ export const Glass: StoryObj<StoryArgs> = {
     })
 };
 
+export const LiquidGlass: StoryObj<StoryArgs> = {
+    render: (args: StoryArgs) => ({
+        components: { ClayCard },
+        setup: () => ({ args }),
+        template: `
+            <div style="background-image: url('https://picsum.photos/1920/1080');
+                        background-size: cover;
+                        padding: 2rem 4rem;">
+                <ClayCard :elevation="args.elevation"
+                          liquid
+                          style="aspect-ratio: 32/9;" />
+            </div>
+        `
+    })
+};
+
 export default meta;

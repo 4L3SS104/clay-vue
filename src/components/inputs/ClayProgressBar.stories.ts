@@ -5,6 +5,8 @@ import ClayProgressBar from "./ClayProgressBar.vue";
 interface StoryArgs
 {
     progress: number;
+    glass: boolean;
+    liquidGlass: boolean;
 }
 
 const meta: Meta<StoryArgs> = {
@@ -34,10 +36,34 @@ const meta: Meta<StoryArgs> = {
                 max: 100,
                 step: 1
             }
+        },
+        glass: {
+            name: "Glass",
+            type: { name: "boolean", required: false },
+            description: "Whether to apply the glass effect to the progress bar's background.",
+            table: {
+                category: "Component's",
+                defaultValue: { summary: "false" },
+                type: { summary: "boolean" }
+            },
+            control: { type: "boolean" }
+        },
+        liquidGlass: {
+            name: "Liquid glass",
+            type: { name: "boolean", required: false },
+            description: "Whether to apply the liquid glass effect to the progress bar's background.",
+            table: {
+                category: "Component's",
+                defaultValue: { summary: "false" },
+                type: { summary: "boolean" }
+            },
+            control: { type: "boolean" }
         }
     },
     args: {
-        progress: 50
+        progress: 50,
+        glass: false,
+        liquidGlass: false
     }
 };
 
@@ -64,6 +90,36 @@ export const Full: StoryObj<StoryArgs> = {
         components: { ClayProgressBar },
         setup: () => ({ args }),
         template: `<ClayProgressBar v-bind="args" />`
+    })
+};
+
+export const Glass: StoryObj<StoryArgs> = {
+    args: { glass: true },
+    render: (args: StoryArgs) => ({
+        components: { ClayProgressBar },
+        setup: () => ({ args }),
+        template: `
+            <div style="background-image: url('https://picsum.photos/1920/1080');
+                        background-size: cover;
+                        padding: 2rem 4rem;">
+                <ClayProgressBar v-bind="args" style="max-width: 300px;" />
+            </div>
+        `
+    })
+};
+
+export const LiquidGlass: StoryObj<StoryArgs> = {
+    args: { liquidGlass: true },
+    render: (args: StoryArgs) => ({
+        components: { ClayProgressBar },
+        setup: () => ({ args }),
+        template: `
+            <div style="background-image: url('https://picsum.photos/1920/1080');
+                        background-size: cover;
+                        padding: 2rem 4rem;">
+                <ClayProgressBar v-bind="args" style="max-width: 300px;" />
+            </div>
+        `
     })
 };
 

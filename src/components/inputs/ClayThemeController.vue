@@ -16,9 +16,10 @@
 
     :root
     {
-        --clay-themecontroller-color-off: oklch(from var(--clay-light-color) calc(l - 0.15) c h);
-        --clay-themecontroller-color-on: var(--clay-primary-color);
-        --clay-themecontroller-color-knob: var(--white);
+        --clay-themecontroller-color-off: var(--clay-primary-color);
+        --clay-themecontroller-color-on: oklch(from var(--black) calc(l + 0.4) c h);
+        --clay-themecontroller-color-knob-sun: #FDE5AB;
+        --clay-themecontroller-color-knob-moon: #D2DAE1;
         --clay-themecontroller-color-knob-elevation: var(--black);
         --clay-themecontroller-color-knob-shadow: oklch(from var(--clay-themecontroller-color-on) calc(l - 0.25) c h);
         --clay-themecontroller-color-shadow: oklch(from var(--black) calc(l - 0.25) c h);
@@ -66,9 +67,9 @@
 
             & > .clay-theme-controller__knob
             {
-                background-color: var(--clay-themecontroller-color-knob);
+                background-color: var(--clay-themecontroller-color-knob-sun);
                 --clay-themecontroller-color-knob-shadow: oklch(from
-                var(--clay-themecontroller-color-knob) calc(l - 0.25) c h );
+                var(--clay-themecontroller-color-knob-sun) calc(l - 0.25) c h );
                 border-radius: 50%;
                 bottom: var(--clay-themecontroller-knob-offset);
                 content: "";
@@ -80,7 +81,8 @@
                 @include mixins.clay-shadow-elevation($color:
                 var(--clay-themecontroller-color-knob-elevation), $intensity: 0.125);
                 transition: transform var(--clay-ease-duration) var(--clay-ease-function),
-                        box-shadow var(--clay-ease-duration) var(--clay-ease-function);
+                        box-shadow var(--clay-ease-duration) var(--clay-ease-function),
+                        background-color var(--clay-ease-duration) var(--clay-ease-function);
 
                 &::before
                 {
@@ -103,6 +105,9 @@
 
             & > .clay-theme-controller__knob
             {
+                background-color: var(--clay-themecontroller-color-knob-moon);
+                --clay-themecontroller-color-knob-shadow: oklch(from
+                var(--clay-themecontroller-color-knob-moon) calc(l - 0.25) c h);
                 transform: translateX(
                     calc(var(--clay-themecontroller-width) -
                     var(--clay-themecontroller-knob-size) - 2 * var(--clay-themecontroller-knob-offset))
@@ -140,13 +145,13 @@
             --clay-themecontroller-shadow: inset 0 0.25em 0.25em 0 rgba(from
                                             var(--clay-themecontroller-color-shadow) r g b / 0.125),
                                           inset 0 -0.25em 0.25em 0 rgba(from var(--white) r g b / 0.075);
-            --clay-themecontroller-color-knob: oklch(from var(--white) calc(l - 0.125) c h);
+            --clay-themecontroller-color-knob-sun: oklch(from var(--white) calc(l - 0.125) c h);
         }
 
         .clay-theme-controller .clay-theme-controller__input:checked +
         .clay-theme-controller__slider > .clay-theme-controller__knob
         {
-            --clay-themecontroller-color-knob: var(--white);
+            --clay-themecontroller-color-knob-sun: var(--white);
             --clay-themecontroller-color-knob-elevation: var(--white);
             box-shadow: 0 0 0.375em 0 rgba(from var(--clay-themecontroller-color-knob-elevation) r g b / 0.25);
         }

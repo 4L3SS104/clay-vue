@@ -14,21 +14,31 @@
         liquidGlass: {
             type: Boolean,
             default: false
+        },
+        indeterminate: {
+            type: Boolean,
+            default: false
         }
     });
 
     const classes = computed((): Record<string, boolean> => ({
         "clay-progress-bar--glass": props.glass,
-        "clay-progress-bar--liquid-glass": props.liquidGlass
+        "clay-progress-bar--liquid-glass": props.liquidGlass,
+        "clay-progress-bar--indeterminate": props.indeterminate
     }));
 </script>
 
 <template>
     <label class="clay-progress-bar"
            :class="classes"
-           :style="{ '--_w': `${progress}%` }">
+           :style="indeterminate ? undefined : { '--_w': `${progress}%` }"
+           role="progressbar"
+           :aria-valuemin="indeterminate ? undefined : 0"
+           :aria-valuemax="indeterminate ? undefined : 100"
+           :aria-valuenow="indeterminate ? undefined : progress">
         <span class="clay-progress-bar__track">
-            <span class="clay-progress-bar__indicator" :style="{ width: `${progress}%` }"></span>
+            <span class="clay-progress-bar__indicator"
+                  :style="indeterminate ? undefined : { width: `${progress}%` }"></span>
         </span>
     </label>
 </template>
@@ -49,6 +59,8 @@
 
         --clay-border-radius: 0.35rem;
         --clay-progress-bar-height: 0.75rem;
+        --clay-progress-bar-indeterminate-segment: 40%;
+        --clay-progress-bar-indeterminate-duration: 1.2s;
     }
 
     .clay-progress-bar
@@ -118,6 +130,17 @@
                 }
             }
 
+            &--indeterminate
+            {
+                .clay-progress-bar__indicator
+                {
+                    width: var(--clay-progress-bar-indeterminate-segment);
+                    animation: clay-progress-bar-indeterminate
+                        var(--clay-progress-bar-indeterminate-duration)
+                        var(--clay-ease-function) infinite alternate;
+                }
+            }
+
         &__indicator
         {
             display: block;
@@ -142,6 +165,36 @@
                     z-index: -1;
                 }
         }
+    }
+
+    @keyframes clay-progress-bar-indeterminate
+    {
+        from
+        {
+            left: 0;
+            transform: scaleX(0.85);
+        }
+        to
+        {
+            left: calc(100% - var(--clay-progress-bar-indeterminate-segment));
+            transform: scaleX(1.15);
+        }
+    }
+
+    @media (prefers-reduced-motion: reduce)
+    {
+        .clay-progress-bar--indeterminate .clay-progress-bar__indicator
+        {
+            left: calc(50% - (var(--clay-progress-bar-indeterminate-segment) / 2));
+            animation: clay-progress-bar-indeterminate-pulse 2s ease-in-out infinite;
+        }
+    }
+
+    @keyframes clay-progress-bar-indeterminate-pulse
+    {
+        0%,
+        100% { opacity: 0.5; }
+        50% { opacity: 1; }
     }
 
     @media (prefers-color-scheme: dark)

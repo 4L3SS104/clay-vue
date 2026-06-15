@@ -7,6 +7,7 @@ interface StoryArgs
     progress: number;
     glass: boolean;
     liquidGlass: boolean;
+    indeterminate: boolean;
 }
 
 const meta: Meta<StoryArgs> = {
@@ -58,12 +59,24 @@ const meta: Meta<StoryArgs> = {
                 type: { summary: "boolean" }
             },
             control: { type: "boolean" }
+        },
+        indeterminate: {
+            name: "Indeterminate",
+            type: { name: "boolean", required: false },
+            description: "Whether the progress is unknown; shows a looping animation instead of a fixed value.",
+            table: {
+                category: "Component's",
+                defaultValue: { summary: "false" },
+                type: { summary: "boolean" }
+            },
+            control: { type: "boolean" }
         }
     },
     args: {
         progress: 50,
         glass: false,
-        liquidGlass: false
+        liquidGlass: false,
+        indeterminate: false
     }
 };
 
@@ -90,6 +103,15 @@ export const Full: StoryObj<StoryArgs> = {
         components: { ClayProgressBar },
         setup: () => ({ args }),
         template: `<ClayProgressBar v-bind="args" />`
+    })
+};
+
+export const Indeterminate: StoryObj<StoryArgs> = {
+    args: { indeterminate: true },
+    render: (args: StoryArgs) => ({
+        components: { ClayProgressBar },
+        setup: () => ({ args }),
+        template: `<ClayProgressBar v-bind="args" style="max-width: 300px;" />`
     })
 };
 

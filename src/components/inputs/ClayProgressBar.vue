@@ -65,15 +65,16 @@
 
     .clay-progress-bar
     {
+        border-radius: var(--clay-border-radius);
         display: block;
+        height: var(--clay-progress-bar-height);
         position: relative;
         width: 100%;
-        height: var(--clay-progress-bar-height);
-        border-radius: var(--clay-border-radius);
         z-index: 0;
 
         &::after
         {
+            @include mixins.clay-shadow-elevation($intensity: 0.5);
             border-radius: var(--clay-border-radius);
             bottom: 0;
             content: "";
@@ -84,13 +85,12 @@
             transition: width 0.1s ease;
             width: var(--_w, 0%);
             z-index: 1;
-            @include mixins.clay-shadow-elevation($intensity: 0.5);
         }
 
         &__track
         {
             background-color: rgba(from var(--clay-progress-bar-background-color) r g b /
-                var(--clay-progress-bar-background-opacity));
+                                        var(--clay-progress-bar-background-opacity));
             border-radius: var(--clay-border-radius);
             bottom: 0;
             box-shadow: var(--clay-progress-bar-indicator-color-shadow-background);
@@ -116,16 +116,16 @@
 
                 .clay-progress-bar__track::after
                 {
-                    content: "";
-                    position: absolute;
-                    inset: 0;
                     border-radius: var(--clay-border-radius);
-                    pointer-events: none;
                     background-image: linear-gradient(rgba(from var(--white) r g b / 0.55),
                         rgba(from var(--white) r g b / 0) 45%);
                     box-shadow:
                         inset 0 0.08em 0.06em -0.02em rgba(from var(--white) r g b / 0.7),
                         inset 0 -0.06em 0.08em -0.02em rgba(from var(--black) r g b / 0.25);
+                    content: "";
+                    inset: 0;
+                    position: absolute;
+                    pointer-events: none;
                     z-index: 1;
                 }
             }
@@ -134,34 +134,34 @@
             {
                 .clay-progress-bar__indicator
                 {
-                    width: var(--clay-progress-bar-indeterminate-segment);
                     animation: clay-progress-bar-indeterminate
-                        var(--clay-progress-bar-indeterminate-duration)
-                        var(--clay-ease-function) infinite alternate;
+                               var(--clay-progress-bar-indeterminate-duration)
+                               var(--clay-ease-function) infinite alternate;
+                    width: var(--clay-progress-bar-indeterminate-segment);
                 }
             }
 
         &__indicator
         {
-            display: block;
             align-items: center;
+            background-color: var(--clay-progress-bar-indicator-color);
+            border-radius: var(--clay-border-radius);
+            display: block;
             position: absolute;
             height: 100%;
-            background-color: var(--clay-progress-bar-indicator-color);
             transition: width 0.1s ease;
-            border-radius: var(--clay-border-radius);
             z-index: 0;
 
         &::before
                 {
-                    content: "";
-                    position: absolute;
-                    top: 0;
-                    left: 0;
-                    right: 0;
+                    @include mixins.clay-shadow-puff($intensity: 0.25);
                     bottom: 0;
                     border-radius: var(--clay-border-radius);
-                    @include mixins.clay-shadow-puff($intensity: 0.25);
+                    content: "";
+                    left: 0;
+                    position: absolute;
+                    right: 0;
+                    top: 0;
                     z-index: -1;
                 }
         }
@@ -185,8 +185,8 @@
     {
         .clay-progress-bar--indeterminate .clay-progress-bar__indicator
         {
-            left: calc(50% - (var(--clay-progress-bar-indeterminate-segment) / 2));
             animation: clay-progress-bar-indeterminate-pulse 2s ease-in-out infinite;
+            left: calc(50% - (var(--clay-progress-bar-indeterminate-segment) / 2));
         }
     }
 

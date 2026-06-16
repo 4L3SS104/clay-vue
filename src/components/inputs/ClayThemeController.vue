@@ -66,8 +66,8 @@
         --clay-themecontroller-color-outline: oklch(from var(--clay-primary-color) l c calc(h + 180));
 
         --clay-themecontroller-shadow: inset 0 0.25em 0.25em 0 rgba(from
-                                        var(--clay-themecontroller-color-shadow) r g b / 0.125),
-                                      inset 0 -0.25em 0.25em 0 rgba(from var(--white) r g b / 0.25);
+                                       var(--clay-themecontroller-color-shadow) r g b / 0.125),
+                                       inset 0 -0.25em 0.25em 0 rgba(from var(--white) r g b / 0.25);
 
         --clay-themecontroller-width: 4em;
         --clay-themecontroller-height: 2em;
@@ -107,34 +107,35 @@
 
             & > .clay-theme-controller__knob
             {
-                background-color: var(--clay-themecontroller-color-knob-sun);
-                    --clay-themecontroller-color-knob-shadow: oklch(from
+                --clay-themecontroller-color-knob-shadow: oklch(from
                     var(--clay-themecontroller-color-knob-sun) calc(l - 0.25) c h );
-                    --clay-themecontroller-color-knob-glow: var(--clay-themecontroller-color-sun-glow);
+                --clay-themecontroller-color-knob-glow:
+                    var(--clay-themecontroller-color-sun-glow);
+                    @include mixins.clay-shadow-elevation($color:
+                    var(--clay-themecontroller-color-knob-elevation), $intensity: 0.125);
                 border-radius: 50%;
+                background-color: var(--clay-themecontroller-color-knob-sun);
                 bottom: var(--clay-themecontroller-knob-offset);
                 content: "";
                 height: var(--clay-themecontroller-knob-size);
                 left: var(--clay-themecontroller-knob-offset);
                 position: absolute;
                 width: var(--clay-themecontroller-knob-size);
-                @include mixins.clay-shadow-elevation($color:
-                var(--clay-themecontroller-color-knob-elevation), $intensity: 0.125);
                 transition: transform var(--clay-ease-duration) var(--clay-ease-function),
                         box-shadow var(--clay-ease-duration) var(--clay-ease-function),
                         background-color var(--clay-ease-duration) var(--clay-ease-function);
 
                 &::before
                 {
+                    @include mixins.clay-shadow-puff($intensity: 0.5);
                     border-radius: 50%;
                     bottom: 0;
+                    content: "";
                     left: 0;
                     mix-blend-mode: luminosity;
                     position: absolute;
                     right: 0;
                     top: 0;
-                    content: "";
-                    @include mixins.clay-shadow-puff($intensity: 0.5);
                 }
 
                 & > .clay-theme-controller__crater
@@ -197,13 +198,16 @@
 
             & > .clay-theme-controller__knob
             {
-                background-color: var(--clay-themecontroller-color-knob-moon);
-                    --clay-themecontroller-color-knob-shadow: oklch(from
+                --clay-themecontroller-color-knob-shadow: oklch(from
                     var(--clay-themecontroller-color-knob-moon) calc(l - 0.25) c h);
-                    --clay-themecontroller-color-knob-glow: var(--clay-themecontroller-color-moon-glow);
+                --clay-themecontroller-color-knob-glow:
+                    var(--clay-themecontroller-color-moon-glow);
+
+                background-color: var(--clay-themecontroller-color-knob-moon);
                 transform: translateX(
-                    calc(var(--clay-themecontroller-width) -
-                    var(--clay-themecontroller-knob-size) - 2 * var(--clay-themecontroller-knob-offset))
+                           calc(var(--clay-themecontroller-width) -
+                           var(--clay-themecontroller-knob-size) - 2 *
+                           var(--clay-themecontroller-knob-offset))
                 );
 
                 & > .clay-theme-controller__crater

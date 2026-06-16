@@ -19,8 +19,8 @@
     {
         --clay-checkbox-color-off: oklch(from var(--clay-light-color) calc(l - 0.15) c h);
         --clay-checkbox-color-on: var(--clay-primary-color);
-        --clay-checkbox-color-shadow: oklch(from var(--black) calc(l - 0.25) c h);
         --clay-checkbox-color-outline: oklch(from var(--clay-primary-color) l c calc(h + 180));
+        --clay-checkbox-color-shadow: oklch(from var(--black) calc(l - 0.25) c h);
 
         --clay-checkbox-size: 1.5em;
         --clay-checkbox-roundness: 0.375em;
@@ -47,7 +47,7 @@
             align-items: center;
             background-color: var(--clay-checkbox-color-off);
             background-image: linear-gradient(rgba(from var(--white) r g b / 0.25),
-            rgba(from var(--black) r g b / 0.125));
+                                              rgba(from var(--black) r g b / 0.125));
             background-blend-mode: overlay;
             border-radius: var(--clay-checkbox-roundness);
             bottom: 0;
@@ -67,23 +67,21 @@
                             transform var(--clay-ease-duration) var(--clay-ease-function);
                 transform: scale(0.5);
             }
-            z-index: 0;
             @include mixins.clay-shadow-elevation($color: var(--clay-checkbox-color-shadow), $intensity: 0.25);
+            z-index: 0;
 
             &::before
             {
-                border-radius: var(--clay-checkbox-roundness);
-                bottom: 0;
-
                 @include mixins.clay-shadow-puff($intensity: 0.125);
 
+                border-radius: var(--clay-checkbox-roundness);
+                bottom: 0;
                 content: "";
                 left: 0;
                 mix-blend-mode: luminosity;
                 position: absolute;
                 right: 0;
                 top: 0;
-
                 z-index: -1;
             }
 

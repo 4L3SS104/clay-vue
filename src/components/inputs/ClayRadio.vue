@@ -98,31 +98,54 @@
                             transform var(--clay-ease-duration) var(--clay-ease-function);
                 width: var(--clay-radio-size);
 
-                &::before
+                &::before,
+                &::after
                 {
-                    background-color: var(--clay-radio-color-fill);
-                    background-blend-mode: overlay;
                     border-radius: 50%;
-                    box-shadow: 0 0.075em 0.125em 0 rgba(from var(--clay-radio-color-shadow) r g b / 0.75),
-                                inset 0 0.125em 0.125em 0 rgba(from var(--white) r g b / 0.45),
-                                inset 0 -0.125em 0.125em 0 rgba(from var(--clay-radio-color-shadow) r g b / 0.45);
                     content: "";
                     height: 50%;
                     left: 50%;
                     position: absolute;
                     top: 50%;
                     transform: translate(-50%, -50%) scale(0);
-                    transition: transform var(--clay-ease-duration) var(--clay-ease-function);
                     width: 50%;
+                }
+
+                &::before
+                {
+                    background-color: var(--clay-radio-color-fill);
+                    background-blend-mode: overlay;
+
+                    @include mixins.clay-shadow-puff($color: var(--clay-radio-color-shadow), $intensity: 0.5);
+
+                    transition: transform var(--clay-ease-duration) var(--clay-ease-function);
+
+                    z-index: 1;
+                }
+
+                &::after
+                {
+                    @include mixins.clay-shadow-elevation($intensity: 0.25);
+
+                    transition: box-shadow var(--clay-ease-duration) var(--clay-ease-function),
+                                transform var(--clay-ease-duration) var(--clay-ease-function);
                 }
             }
 
-            &:hover &__control::before
+            &:hover &__input:not(:checked) + &__control
             {
-                @include mixins.clay-shadow-elevation($intensity: 0.5);
+                box-shadow: functions.clay-outline($color: var(--clay-radio-color-outline), $opacity: 0),
+                            inset 0 -0.075em 0.125em 0 rgba(from var(--white) r g b / 0.3),
+                            inset 0 0.2em 0.3em 0 rgba(from var(--clay-radio-color-shadow) r g b / 0.3);
             }
 
-            &__input:checked + &__control::before
+            &:hover &__input:checked + &__control::after
+            {
+                @include mixins.clay-shadow-elevation($intensity: 0.4); // stesso problema dell'elevazione che scompare.
+            }
+
+            &__input:checked + &__control::before,
+            &__input:checked + &__control::after
             {
                 transform: translate(-50%, -50%) scale(1);
             }

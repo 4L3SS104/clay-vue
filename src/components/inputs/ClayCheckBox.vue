@@ -1,13 +1,28 @@
 <script lang="ts" setup>
     import FontAwesome from "../core/FontAwesome.vue";
+
+    defineProps({
+        id: {
+            type: String,
+            required: true
+        },
+        label: {
+            type: String,
+            default: ""
+        }
+    });
 </script>
 
 <template>
-    <label class="clay-checkbox">
-        <input type="checkbox" class="clay-checkbox__input" />
+    <label :for="id"
+           class="clay-checkbox">
+        <input :id="id"
+               type="checkbox"
+               class="clay-checkbox__input" />
         <span class="clay-checkbox__checkmark">
             <FontAwesome icon="check" />
         </span>
+        {{ label }}
     </label>
 </template>
 

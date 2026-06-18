@@ -60,14 +60,14 @@ export const Default: StoryObj<StoryArgs> = {
 
             return { args, value };
         },
-        template: `<ClayRadio id="storybook--story__clay-radio"
+        template: `<ClayRadio id="storybook--story__clay-radio--1"
                               v-model="value"
                               name="example"
                               value="option1"
                               :small="args.size === 'small'"
                               :large="args.size === 'large'"
                               :disabled="args.disabled" />
-                   <ClayRadio id="storybook--story__clay-radio"
+                   <ClayRadio id="storybook--story__clay-radio--2"
                               v-model="value"
                               name="example"
                               value="option2"

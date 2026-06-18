@@ -154,6 +154,12 @@
                 @include mixins.clay-shadow-elevation($intensity: 0.4); // stesso problema dell'elevazione che scompare.
             }
 
+            &:hover &__input:checked + &__control::before,
+            &:hover &__input:checked + &__control::after
+            {
+                transform: translate(-50%, -50%) scale(1.10);
+            }
+
             &__input:checked + &__control::before,
             &__input:checked + &__control::after
             {
@@ -193,8 +199,18 @@
         {
             :root
             {
-                --clay-radio-color-background: oklch(from var(--clay-dark-color) calc(l + 0.075) c h);
+                --clay-radio-color-background: oklch(from var(--clay-dark-color) l c h);
                 --clay-radio-color-shadow: var(--black);
+                --clay-radio-color-outline: oklch(from var(--clay-primary-color) l c calc(h + 180));
+                --clay-radio-color-fill: oklch(from var(--clay-primary-color) calc( l - 0.2 ) c h);
+
+            }
+
+            .clay-radio__control
+            {
+                box-shadow: functions.clay-outline($color: var(--clay-radio-color-outline), $opacity: 0),
+                            inset 0 -0.075em 0.125em 0 rgba(from var(--white) r g b / 0.2),
+                            inset 0 0.125em 0.25em 0 rgba(from var(--clay-radio-color-shadow) r g b / 0.35);
             }
         }
     }

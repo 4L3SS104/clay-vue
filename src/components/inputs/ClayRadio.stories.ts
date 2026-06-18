@@ -56,12 +56,21 @@ export const Default: StoryObj<StoryArgs> = {
         components: { ClayRadio },
         setup: () =>
         {
-            const checked = ref(false);
+            const value = ref("");
 
-            return { args, checked };
+            return { args, value };
         },
         template: `<ClayRadio id="storybook--story__clay-radio"
-                              v-model="checked"
+                              v-model="value"
+                              name="example"
+                              value="option1"
+                              :small="args.size === 'small'"
+                              :large="args.size === 'large'"
+                              :disabled="args.disabled" />
+                   <ClayRadio id="storybook--story__clay-radio"
+                              v-model="value"
+                              name="example"
+                              value="option2"
                               :small="args.size === 'small'"
                               :large="args.size === 'large'"
                               :disabled="args.disabled" />`

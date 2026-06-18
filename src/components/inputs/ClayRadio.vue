@@ -4,12 +4,20 @@
     // A native radio can't be unchecked without JS, so this control is a checkbox:
     // it toggles on/off entirely via the browser, working with JavaScript disabled.
     const model = defineModel({
-        type: Boolean,
-        default: false
+        type: String,
+        default: ""
     });
 
     const props = defineProps({
         id: {
+            type: String,
+            required: true
+        },
+        name: {
+            type: String,
+            required: true
+        },
+        value: {
             type: String,
             required: true
         },
@@ -41,7 +49,9 @@
         <input :id="id"
                v-model="model"
                class="clay-radio__input"
-               type="checkbox"
+               type="radio"
+               :name="name"
+               :value="value"
                :disabled="disabled" />
 
         <span class="clay-radio__control"></span>
@@ -64,7 +74,7 @@
             --clay-radio-size: 1.5em;
         }
 
-        .clay-radio
+        .clay-radio // tutto il componente
         {
             align-items: center;
             cursor: pointer;
@@ -81,7 +91,7 @@
                 width: 1px;
             }
 
-            &__control
+            &__control // cerchio
             {
                 background-color: var(--clay-radio-color-background);
                 background-image: linear-gradient(rgba(from var(--black) r g b / 0.125),
@@ -111,7 +121,7 @@
                     width: 50%;
                 }
 
-                &::before
+                &::before // pallina dentro
                 {
                     background-color: var(--clay-radio-color-fill);
                     background-blend-mode: overlay;
@@ -123,7 +133,7 @@
                     z-index: 1;
                 }
 
-                &::after
+                &::after //solo ombra pallina elevazione
                 {
                     @include mixins.clay-shadow-elevation($intensity: 0.25);
 

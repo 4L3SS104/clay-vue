@@ -131,11 +131,19 @@ export const Glass: StoryObj<StoryArgs> = {
         components: { ClayButton },
         setup: () => ({ args }),
         template: `
-            <ClayButton glass
-                        // :small="args.size === 'small'"
-                        // :large="args.size === 'large'">
-                {{ args.label }}
-            </ClayButton>
+            <div style="background-color: #1a1a2e;
+                        background-image:
+                            radial-gradient(40rem 40rem at 15% 20%, #ff6b6b 0%, transparent 60%),
+                            radial-gradient(35rem 35rem at 85% 25%, #4ecdc4 0%, transparent 55%),
+                            radial-gradient(45rem 45rem at 50% 95%, #ffd93d 0%, transparent 55%),
+                            radial-gradient(30rem 30rem at 80% 90%, #845ec2 0%, transparent 60%);
+                        padding: 4rem;">
+                <ClayButton glass
+                            :small="args.size === 'small'"
+                            :large="args.size === 'large'">
+                    {{ args.label }}
+                </ClayButton>
+            </div>
         `
     })
 };

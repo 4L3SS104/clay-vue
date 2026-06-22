@@ -108,9 +108,7 @@
 
     :root
     {
-        --clay-button-color-background: var(--clay-primary-color);
-        --clay-button-color-outline: oklch(from var(--clay-button-color-background) l c calc(h + 180));
-        --clay-button-color-shadow: oklch(from var(--clay-button-color-background) calc(l - 0.25) c h);
+        --clay-button-color: var(--clay-primary-color);
 
         --clay-button-spacing-x: 1em;
         --clay-button-spacing-y: 0.5em;
@@ -121,6 +119,12 @@
 
     .clay-button
     {
+        // Derive every color token from `--clay-button-color` *here*, on the element, so variant
+        // modifiers (which only re-set the base) propagate to outline/shadow/glow as well.
+        --clay-button-color-background: var(--clay-button-color);
+        --clay-button-color-outline: oklch(from var(--clay-button-color) l c calc(h + 180));
+        --clay-button-color-shadow: oklch(from var(--clay-button-color) calc(l - 0.25) c h);
+
         background-color: var(--clay-button-color-background);
         background-image: linear-gradient(rgba(from var(--white) r g b / 0.25), rgba(from var(--black) r g b / 0.125));
         background-blend-mode: overlay;
@@ -202,23 +206,47 @@
         }
         &.clay-button--success
         {
-            --clay-button-color-background: var(--clay-success-color);
+            --clay-button-color: var(--clay-success-color);
         }
         &.clay-button--warning
         {
-            --clay-button-color-background: var(--clay-warning-color);
+            --clay-button-color: var(--clay-warning-color);
         }
         &.clay-button--danger
         {
-            --clay-button-color-background: var(--clay-danger-color);
+            --clay-button-color: var(--clay-danger-color);
         }
         &.clay-button--info
         {
-            --clay-button-color-background: var(--clay-info-color);
+            --clay-button-color: var(--clay-info-color);
         }
         &.clay-button--glass
         {
-            --clay-button-color-background: rgba(from var(--clay-button-color-background) r g b / 0.2);
+            --clay-button-color-background-opacity: 0.12;
+            --clay-button-color-background-blur: 0.3em;
+
+            backdrop-filter: blur(var(--clay-button-color-background-blur)) saturate(180%) brightness(1.08);
+
+            background-color: rgba(from var(--clay-button-color-background) r g b /
+                                        var(--clay-button-color-background-opacity));
+            background-image: none;
+
+            box-shadow:
+                0 0.2em 0.5em -0.15em rgba(from var(--clay-button-color-shadow) r g b / 0.4),
+                inset 0 0.04em 0.04em 0 rgba(from var(--white) r g b / 0.8),
+                inset 0.12em 0.12em 0.25em -0.12em rgba(from var(--white) r g b / 0.55),
+                inset -0.12em -0.12em 0.25em -0.12em rgba(from var(--black) r g b / 0.3);
+
+            &::before
+            {
+                background-image:
+                    radial-gradient(120% 80% at 30% 0%,
+                        rgba(from var(--white) r g b / 0.65), rgba(from var(--white) r g b / 0) 50%),
+                    linear-gradient(160deg,
+                        rgba(from var(--white) r g b / 0) 60%, rgba(from var(--white) r g b / 0.25));
+                box-shadow: none;
+                mix-blend-mode: screen;
+            }
         }
     }
 
@@ -226,14 +254,15 @@
     {
         :root
         {
-            --clay-button-color-background: oklch(from var(--clay-primary-color) calc(l - 0.3) c h);
-            --clay-button-color-background-glow: oklch(from var(--clay-button-color-background) calc(l + 0.2) c h);
-            --clay-button-color-outline: oklch(from var(--clay-button-color-background-glow) l c calc(h + 180));
-            --clay-button-color-shadow: var(--black);
+            --clay-button-color: oklch(from var(--clay-primary-color) calc(l - 0.3) c h);
         }
 
         .clay-button
         {
+            --clay-button-color-background-glow: oklch(from var(--clay-button-color) calc(l + 0.2) c h);
+            --clay-button-color-outline: oklch(from var(--clay-button-color-background-glow) l c calc(h + 180));
+            --clay-button-color-shadow: var(--black);
+
             box-shadow: functions.clay-outline($color: var(--clay-button-color-outline), $opacity: 0),
                         0 0.1em 0.2em -0.1em rgba(from var(--clay-button-color-shadow) r g b / 0.5);
             &:hover,

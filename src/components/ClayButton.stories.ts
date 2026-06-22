@@ -70,4 +70,74 @@ export const Primary: StoryObj<StoryArgs> = {
     })
 };
 
+export const Success: StoryObj<StoryArgs> = {
+    render: (args: StoryArgs) => ({
+        components: { ClayButton },
+        setup: () => ({ args }),
+        template: `
+            <ClayButton success
+                        // :small="args.size === 'small'"
+                        // :large="args.size === 'large'">
+                {{ args.label }}
+            </ClayButton>
+        `
+    })
+};
+
+export const Warning: StoryObj<StoryArgs> = {
+    render: (args: StoryArgs) => ({
+        components: { ClayButton },
+        setup: () => ({ args }),
+        template: `
+            <ClayButton warning
+                        // :small="args.size === 'small'"
+                        // :large="args.size === 'large'">
+                {{ args.label }}
+            </ClayButton>
+        `
+    })
+};
+
+export const Info: StoryObj<StoryArgs> = {
+    render: (args: StoryArgs) => ({
+        components: { ClayButton },
+        setup: () => ({ args }),
+        template: `
+            <ClayButton info
+                        // :small="args.size === 'small'"
+                        // :large="args.size === 'large'">
+                {{ args.label }}
+            </ClayButton>
+        `
+    })
+};
+
+export const Danger: StoryObj<StoryArgs> = {
+    render: (args: StoryArgs) => ({
+        components: { ClayButton },
+        setup: () => ({ args }),
+        template: `
+            <ClayButton danger
+                        // :small="args.size === 'small'"
+                        // :large="args.size === 'large'">
+                {{ args.label }}
+            </ClayButton>
+        `
+    })
+};
+
+export const Glass: StoryObj<StoryArgs> = {
+    render: (args: StoryArgs) => ({
+        components: { ClayButton },
+        setup: () => ({ args }),
+        template: `
+            <ClayButton glass
+                        // :small="args.size === 'small'"
+                        // :large="args.size === 'large'">
+                {{ args.label }}
+            </ClayButton>
+        `
+    })
+};
+
 export default meta;

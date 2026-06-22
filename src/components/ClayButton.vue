@@ -12,6 +12,26 @@
         large: {
             default: false,
             type: Boolean
+        },
+        success: {
+            default: false,
+            type: Boolean
+        },
+        warning: {
+            default: false,
+            type: Boolean
+        },
+        info: {
+            default: false,
+            type: Boolean
+        },
+        danger: {
+            default: false,
+            type: Boolean
+        },
+        glass: {
+            default: false,
+            type: Boolean
         }
     });
 
@@ -19,6 +39,11 @@
     const classes = computed((): Record<string, boolean> => ({
         "clay-button--small": props.small,
         "clay-button--large": props.large,
+        "clay-button--success": props.success,
+        "clay-button--warning": props.warning,
+        "clay-button--info": props.info,
+        "clay-button--danger": props.danger,
+        "clay-button--glass": props.glass,
         "clay-button--active": active.value
     }));
 
@@ -174,6 +199,26 @@
         &.clay-button--large
         {
             font-size: 1.5em;
+        }
+        &.clay-button--success
+        {
+            --clay-button-color-background: var(--clay-success-color);
+        }
+        &.clay-button--warning
+        {
+            --clay-button-color-background: var(--clay-warning-color);
+        }
+        &.clay-button--danger
+        {
+            --clay-button-color-background: var(--clay-danger-color);
+        }
+        &.clay-button--info
+        {
+            --clay-button-color-background: var(--clay-info-color);
+        }
+        &.clay-button--glass
+        {
+            --clay-button-color-background: rgba(from var(--clay-button-color-background) r g b / 0.2);
         }
     }
 

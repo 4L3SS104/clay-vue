@@ -37,7 +37,6 @@
 
     .clay-checkbox
     {
-        cursor: pointer;
         display: inline-block;
         height: var(--clay-checkbox-size);
         position: relative;
@@ -45,10 +44,14 @@
 
         .clay-checkbox__input
         {
-            height: 0;
+            cursor: pointer;
+            inset: 0;
+            margin: 0;
             opacity: 0;
             position: absolute;
-            width: 0;
+            height: 100%;
+            width: 100%;
+            z-index: 1;
         }
 
         .clay-checkbox__checkmark
@@ -57,20 +60,22 @@
             background-color: var(--clay-checkbox-color-off);
             background-image: linear-gradient(rgba(from var(--white) r g b / 0.25),
                                               rgba(from var(--black) r g b / 0.125));
+
             background-blend-mode: overlay;
             border-radius: var(--clay-checkbox-roundness);
             inset: 0;
+            pointer-events: none;
             position: absolute;
             transition: background-color var(--clay-ease-duration) var(--clay-ease-function),
                         box-shadow var(--clay-ease-duration) var(--clay-ease-function),
                         transform var(--clay-ease-duration) var(--clay-ease-function);
-
             .fa
             {
                 color: var(--white);
                 opacity: 0;
                 transition: opacity var(--clay-ease-duration) var(--clay-ease-function),
                             transform var(--clay-ease-duration) var(--clay-ease-function);
+
                 transform: scale(0.5);
             }
             @include mixins.clay-shadow-elevation($color: var(--clay-checkbox-color-shadow), $intensity: 0.25);
@@ -81,13 +86,10 @@
                 @include mixins.clay-shadow-puff($intensity: 0.125);
 
                 border-radius: var(--clay-checkbox-roundness);
-                bottom: 0;
                 content: "";
-                left: 0;
+                inset: 0;
                 mix-blend-mode: luminosity;
                 position: absolute;
-                right: 0;
-                top: 0;
                 z-index: -1;
             }
 
@@ -112,7 +114,7 @@
             transform: translateY(-0.075em) scale(1.1);
         }
 
-        &:hover .clay-checkbox__checkmark
+        .clay-checkbox__input:hover + .clay-checkbox__checkmark
         {
             @include mixins.clay-shadow-elevation($color: var(--clay-checkbox-color-shadow), $intensity: 0.5);
         }
@@ -128,7 +130,7 @@
 
         .clay-checkbox .clay-checkbox__checkmark
         {
-        @include mixins.clay-shadow-elevation($color: var(--clay-checkbox-color-shadow), $intensity: 0.25);
+            @include mixins.clay-shadow-elevation($color: var(--clay-checkbox-color-shadow), $intensity: 0.25);
 
             &::before
             {

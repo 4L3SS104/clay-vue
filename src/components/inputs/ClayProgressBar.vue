@@ -76,12 +76,10 @@
         {
             @include mixins.clay-shadow-elevation($intensity: 0.5);
             border-radius: var(--clay-border-radius);
-            bottom: 0;
             content: "";
-            left: 0;
+            inset: 0;
             pointer-events: none;
             position: absolute;
-            top: 0;
             transition: width 0.1s ease;
             width: var(--_w, 0%);
             z-index: 1;
@@ -92,13 +90,10 @@
             background-color: rgba(from var(--clay-progress-bar-background-color) r g b /
                                         var(--clay-progress-bar-background-opacity));
             border-radius: var(--clay-border-radius);
-            bottom: 0;
             box-shadow: var(--clay-progress-bar-indicator-color-shadow-background);
-            left: 0;
+            inset: 0;
             overflow: hidden;
             position: absolute;
-            right: 0;
-            top: 0;
         }
 
             &--glass
@@ -155,13 +150,10 @@
         &::before
                 {
                     @include mixins.clay-shadow-puff($intensity: 0.25);
-                    bottom: 0;
                     border-radius: var(--clay-border-radius);
                     content: "";
-                    left: 0;
+                    inset: 0;
                     position: absolute;
-                    right: 0;
-                    top: 0;
                     z-index: -1;
                 }
         }

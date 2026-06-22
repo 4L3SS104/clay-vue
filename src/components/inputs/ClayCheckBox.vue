@@ -5,25 +5,19 @@
         id: {
             type: String,
             required: true
-        },
-        label: {
-            type: String,
-            default: ""
         }
     });
 </script>
 
 <template>
-    <label :for="id"
-           class="clay-checkbox">
+    <div class="clay-checkbox">
         <input :id="id"
                type="checkbox"
                class="clay-checkbox__input" />
         <span class="clay-checkbox__checkmark">
             <FontAwesome icon="check" />
         </span>
-        {{ label }}
-    </label>
+    </div>
 </template>
 
 <style lang="scss">
@@ -65,11 +59,8 @@
                                               rgba(from var(--black) r g b / 0.125));
             background-blend-mode: overlay;
             border-radius: var(--clay-checkbox-roundness);
-            bottom: 0;
-            left: 0;
+            inset: 0;
             position: absolute;
-            right: 0;
-            top: 0;
             transition: background-color var(--clay-ease-duration) var(--clay-ease-function),
                         box-shadow var(--clay-ease-duration) var(--clay-ease-function),
                         transform var(--clay-ease-duration) var(--clay-ease-function);

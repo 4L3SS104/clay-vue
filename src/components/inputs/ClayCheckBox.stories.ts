@@ -24,9 +24,6 @@ const meta: Meta<StoryArgs> = {
             control: "text"
         }
     },
-    args: {
-        label: "I agree to the terms and conditions"
-    },
     parameters: {
         docs: {
             description: {
@@ -40,7 +37,7 @@ export const Default: StoryObj<StoryArgs> = {
     render: (args) => ({
         components: { ClayCheckBox },
         setup: () => ({ args }),
-        template: `<ClayCheckBox id="terms" :label="args.label" />`
+        template: `<ClayCheckBox id="terms" />`
     })
 };
 

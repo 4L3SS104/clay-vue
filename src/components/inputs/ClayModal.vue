@@ -1,6 +1,7 @@
 <script setup lang="ts">
     import type { PropType } from "vue";
     import ClayCard from "../ClayCard.vue";
+    import ClayButton from "../ClayButton.vue";
     import { computed } from "vue";
 
     const props = defineProps({
@@ -23,6 +24,42 @@
         backgroundUrl: {
             type: String,
             default: ""
+        },
+        button1Label: {
+            type: String,
+            default: ""
+        },
+        button1Size: {
+            default: "default",
+            type: String as PropType<"small" | "default" | "large">
+        },
+        button1Visible: {
+            type: Boolean,
+            default: false
+        },
+        button2Label: {
+            type: String,
+            default: ""
+        },
+        button2Size: {
+            default: "default",
+            type: String as PropType<"small" | "default" | "large">
+        },
+        button2Visible: {
+            type: Boolean,
+            default: false
+        },
+        button3Label: {
+            type: String,
+            default: ""
+        },
+        button3Size: {
+            default: "default",
+            type: String as PropType<"small" | "default" | "large">
+        },
+        button3Visible: {
+            type: Boolean,
+            default: false
         }
     });
 
@@ -37,6 +74,10 @@
         }
         return {};
     });
+
+    const hasButtons = computed(() =>
+        props.button1Visible || props.button2Visible || props.button3Visible
+    );
 </script>
 
 <template>
@@ -50,6 +91,24 @@
                 {{ props.title }}
             </h2>
             <slot></slot>
+            <div v-if="hasButtons" class="clay-modal-divider"></div>
+            <div v-if="hasButtons" class="clay-modal-footer">
+                <ClayButton v-if="props.button1Visible"
+                            :small="props.button1Size === 'small'"
+                            :large="props.button1Size === 'large'">
+                    {{ props.button1Label }}
+                </ClayButton>
+                <ClayButton v-if="props.button2Visible"
+                            :small="props.button2Size === 'small'"
+                            :large="props.button2Size === 'large'">
+                    {{ props.button2Label }}
+                </ClayButton>
+                <ClayButton v-if="props.button3Visible"
+                            :small="props.button3Size === 'small'"
+                            :large="props.button3Size === 'large'">
+                    {{ props.button3Label }}
+                </ClayButton>
+            </div>
         </ClayCard>
     </div>
 </template>
@@ -62,6 +121,10 @@
     {
         --clay-modal-overlay-color-background: rgba(from var(--clay-dark-color) r g b / 0.5);
         --clay-modal-overlay-opacity: 1.0;
+
+        --clay-modal-divider-color: rgba(from var(--clay-dark-color) r g b / 0.15);
+        --clay-modal-footer-gap: 0.75em;
+        --clay-modal-divider-spacing: 0.75em;
     }
 
     .clay-modal-overlay
@@ -85,5 +148,28 @@
         max-height: 90%;
         max-width: 90%;
         overflow-y: auto;
+    }
+
+    .clay-modal-divider
+    {
+        border: none;
+        border-top: 1px solid var(--clay-modal-divider-color);
+        margin-block: var(--clay-modal-divider-spacing);
+    }
+
+    .clay-modal-footer
+    {
+        display: flex;
+        flex-wrap: wrap;
+        gap: var(--clay-modal-footer-gap);
+        justify-content: flex-end;
+    }
+
+    @media (prefers-color-scheme: dark)
+    {
+        :root
+        {
+            --clay-modal-divider-color: rgba(from var(--clay-light-color) r g b / 0.15);
+        }
     }
 </style>

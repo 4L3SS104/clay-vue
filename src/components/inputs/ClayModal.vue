@@ -78,6 +78,10 @@
     const hasButtons = computed(() =>
         props.button1Visible || props.button2Visible || props.button3Visible
     );
+
+    const actionCount = computed(() =>
+        Number(props.button1Visible) + Number(props.button2Visible) + Number(props.button3Visible)
+    );
 </script>
 
 <template>
@@ -92,7 +96,11 @@
             </h2>
             <slot></slot>
             <div v-if="hasButtons" class="clay-modal-divider"></div>
-            <div v-if="hasButtons" class="clay-modal-footer">
+            <div v-if="hasButtons"
+                 :class="[
+                     'clay-modal-footer',
+                     `clay-modal-footer--${actionCount}`
+                 ]">
                 <ClayButton v-if="props.button1Visible"
                             :small="props.button1Size === 'small'"
                             :large="props.button1Size === 'large'">
@@ -122,6 +130,7 @@
 
         --clay-modal-divider-color: rgba(from var(--clay-dark-color) r g b / 0.15);
         --clay-modal-footer-gap: 0.75em;
+        --clay-modal-footer-inline-padding: 0.5em;
         --clay-modal-divider-spacing: 0.75em;
     }
 
@@ -157,10 +166,57 @@
 
     .clay-modal-footer
     {
-        display: flex;
-        flex-wrap: wrap;
-        gap: var(--clay-modal-footer-gap);
-        justify-content: flex-end;
+        align-items: center;
+        column-gap: var(--clay-modal-footer-gap);
+        display: grid;
+        padding-inline: var(--clay-modal-footer-inline-padding);
+        row-gap: var(--clay-modal-footer-gap);
+    }
+
+    .clay-modal-footer--1
+    {
+        grid-template-columns: minmax(0, 1fr);
+    }
+
+    .clay-modal-footer--1 > *
+    {
+        justify-self: center;
+    }
+
+    .clay-modal-footer--2
+    {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
+
+    .clay-modal-footer--2 > :first-child
+    {
+        justify-self: start;
+    }
+
+    .clay-modal-footer--2 > :last-child
+    {
+        justify-self: end;
+    }
+
+    .clay-modal-footer--3
+    {
+        grid-template-columns: repeat(3, minmax(0, 1fr));
+    }
+
+    .clay-modal-footer--3 > :first-child
+    {
+        justify-self: start;
+    }
+
+    .clay-modal-footer--3 > :nth-child(2)
+    {
+        justify-self: center;
+    }
+
+    .clay-modal-footer--3 > :last-child
+    {
+        justify-self: end;
+
     }
 
     @media (prefers-color-scheme: dark)

@@ -119,8 +119,6 @@
 
     :root
     {
-        --clay-modal-overlay-color-background: rgba(from var(--clay-dark-color) r g b / 0.5);
-        --clay-modal-overlay-opacity: 1.0;
 
         --clay-modal-divider-color: rgba(from var(--clay-dark-color) r g b / 0.15);
         --clay-modal-footer-gap: 0.75em;
@@ -129,14 +127,14 @@
 
     .clay-modal-overlay
     {
-        background-color: rgba(from var(--clay-modal-overlay-color-background) r g b /
-                                    var(--clay-modal-overlay-opacity));
+
+        background-color: var(--clay-modal-overlay-opacity);
         bottom: 0;
         left: 0;
         position: fixed;
         right: 0;
         top: 0;
-        z-index: 1000;
+        z-index: 0;
 
         display: flex;
         justify-content: center;

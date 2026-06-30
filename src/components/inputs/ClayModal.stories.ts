@@ -185,7 +185,7 @@ const meta: Meta<StoryArgs> = {
 
 export default meta;
 
-export const WithButtons: StoryObj<StoryArgs> = {
+export const Default: StoryObj<StoryArgs> = {
     render: (args: StoryArgs) => ({
         components: { ClayModal },
         setup: () => ({ args }),

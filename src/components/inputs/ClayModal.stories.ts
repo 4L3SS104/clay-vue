@@ -226,3 +226,24 @@ export const Glass: StoryObj<StoryArgs> = {
         button2Visible: true
     }
 };
+
+export const LiquidGlass: StoryObj<StoryArgs> = {
+    render: (args: StoryArgs) => ({
+        components: { ClayModal },
+        setup: () => ({ args }),
+        template: `
+            <ClayModal v-bind="args">
+                <p>Modale con sfondo e effetto vetro.</p>
+            </ClayModal>
+        `
+
+    }),
+    args: {
+        glass: true,
+        backgroundUrl: "https://picsum.photos/1920/1080",
+        button1Label: "Annulla",
+        button1Visible: true,
+        button2Label: "Conferma",
+        button2Visible: true
+    }
+};

@@ -6,6 +6,7 @@ interface StoryArgs {
     title: string;
     elevation: "none" | "low" | "default" | "high";
     glass: boolean;
+    variant: "default" | "liquid-glass";
     backgroundUrl: string;
 
     button1Label: string;
@@ -66,6 +67,16 @@ const meta: Meta<StoryArgs> = {
                 defaultValue: { summary: "false" },
                 type: { summary: "boolean" } },
             control: "boolean"
+        },
+        variant: {
+            name: "Variant",
+            type: { name: "string", required: false },
+            description: "Visual variant of the modal content.",
+            table: { category: "Component's",
+                defaultValue: { summary: "default" },
+                type: { summary: "default | liquid-glass" } },
+            control: { type: "select", labels: { "default": "Default", "liquid-glass": "Liquid Glass" } },
+            options: ["default", "liquid-glass"]
         },
         backgroundUrl: {
             name: "Background URL",
@@ -169,6 +180,7 @@ const meta: Meta<StoryArgs> = {
         title: "Titolo della Modale",
         elevation: "default",
         glass: false,
+        variant: "default",
         backgroundUrl: "",
 
         button1Label: "Annulla",
@@ -218,6 +230,7 @@ export const Glass: StoryObj<StoryArgs> = {
 
     }),
     args: {
+        variant: "default",
         glass: true,
         backgroundUrl: "https://picsum.photos/1920/1080",
         button1Label: "Annulla",
@@ -239,7 +252,7 @@ export const LiquidGlass: StoryObj<StoryArgs> = {
 
     }),
     args: {
-        glass: true,
+        variant: "liquid-glass",
         backgroundUrl: "https://picsum.photos/1920/1080",
         button1Label: "Annulla",
         button1Visible: true,

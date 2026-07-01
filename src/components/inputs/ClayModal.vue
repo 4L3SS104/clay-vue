@@ -21,6 +21,10 @@
             default: false,
             type: Boolean
         },
+        variant: {
+            default: "default",
+            type: String as PropType<"default" | "liquid-glass">
+        },
         backgroundUrl: {
             type: String,
             default: ""
@@ -78,6 +82,12 @@
     const hasButtons = computed(() =>
         props.button1Visible || props.button2Visible || props.button3Visible
     );
+    const contentClasses = computed((): Record<string, boolean> => ({
+        "clay-modal-content--liquid-glass": props.variant === "liquid-glass"
+    }));
+    const contentGlass = computed((): boolean =>
+        props.glass || props.variant === "liquid-glass"
+    );
 
     const actionCount = computed(() =>
         Number(props.button1Visible) + Number(props.button2Visible) + Number(props.button3Visible)
@@ -89,8 +99,9 @@
          class="clay-modal-overlay"
          :style="overlayStyle">
         <ClayCard class="clay-modal-content"
+                  :class="contentClasses"
                   :elevation="props.elevation"
-                  :glass="props.glass">
+                  :glass="contentGlass">
             <h2 v-if="props.title">
                 {{ props.title }}
             </h2>
@@ -132,6 +143,7 @@
         --clay-modal-footer-gap: 0.75em;
         --clay-modal-footer-inline-padding: 0.5em;
         --clay-modal-divider-spacing: 0.75em;
+        --clay-modal-liquid-glass-blur: 0.5em;
     }
 
     .clay-modal-overlay
@@ -155,6 +167,27 @@
         max-height: 90%;
         max-width: 90%;
         overflow-y: auto;
+
+        &.clay-modal-content--liquid-glass
+        {
+            --clay-card-opacity: 0.15;
+
+            backdrop-filter: blur(var(--clay-modal-liquid-glass-blur)) saturate(200%) brightness(1.1);
+
+            &::after
+            {
+                background-image: linear-gradient(rgba(from var(--white) r g b / 0.55),
+                    rgba(from var(--white) r g b / 0) 45%);
+                border-radius: var(--clay-card-roundness);
+                box-shadow: inset 0 0.08em 0.06em -0.02em rgba(from var(--white) r g b / 0.7),
+                            inset 0 -0.06em 0.08em -0.02em rgba(from var(--black) r g b / 0.25);
+                content: "";
+                inset: 0;
+                pointer-events: none;
+                position: absolute;
+                z-index: 1;
+            }
+        }
     }
 
     .clay-modal-divider

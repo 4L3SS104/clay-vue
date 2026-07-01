@@ -7,6 +7,7 @@ interface StoryArgs {
     elevation: "none" | "low" | "default" | "high";
     glass: boolean;
     variant: "default" | "liquid-glass";
+    backdrop: "transparent" | "dimmed";
     backgroundUrl: string;
 
     button1Label: string;
@@ -77,6 +78,16 @@ const meta: Meta<StoryArgs> = {
                 type: { summary: "default | liquid-glass" } },
             control: { type: "select", labels: { "default": "Default", "liquid-glass": "Liquid Glass" } },
             options: ["default", "liquid-glass"]
+        },
+        backdrop: {
+            name: "Backdrop",
+            type: { name: "string", required: false },
+            description: "Backdrop variant behind the modal.",
+            table: { category: "Component's",
+                defaultValue: { summary: "transparent" },
+                type: { summary: "transparent | dimmed" } },
+            control: { type: "select", labels: { "transparent": "Transparent", "dimmed": "Dimmed" } },
+            options: ["transparent", "dimmed"]
         },
         backgroundUrl: {
             name: "Background URL",
@@ -181,6 +192,7 @@ const meta: Meta<StoryArgs> = {
         elevation: "default",
         glass: false,
         variant: "default",
+        backdrop: "transparent",
         backgroundUrl: "",
 
         button1Label: "Annulla",
@@ -254,6 +266,26 @@ export const LiquidGlass: StoryObj<StoryArgs> = {
     args: {
         variant: "liquid-glass",
         backgroundUrl: "https://picsum.photos/1920/1080",
+        button1Label: "Annulla",
+        button1Visible: true,
+        button2Label: "Conferma",
+        button2Visible: true
+    }
+};
+
+export const DimmedBackdrop: StoryObj<StoryArgs> = {
+    render: (args: StoryArgs) => ({
+        components: { ClayModal },
+        setup: () => ({ args }),
+        template: `
+            <ClayModal v-bind="args">
+                <p>Modale con backdrop leggermente oscurato.</p>
+            </ClayModal>
+        `
+
+    }),
+    args: {
+        backdrop: "dimmed",
         button1Label: "Annulla",
         button1Visible: true,
         button2Label: "Conferma",

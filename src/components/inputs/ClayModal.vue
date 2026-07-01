@@ -25,6 +25,10 @@
             default: "default",
             type: String as PropType<"default" | "liquid-glass">
         },
+        backdrop: {
+            default: "transparent",
+            type: String as PropType<"transparent" | "dimmed">
+        },
         backgroundUrl: {
             type: String,
             default: ""
@@ -88,6 +92,9 @@
     const contentGlass = computed((): boolean =>
         props.glass || props.variant === "liquid-glass"
     );
+    const overlayClasses = computed((): Record<string, boolean> => ({
+        "clay-modal-overlay--dimmed": props.backdrop === "dimmed"
+    }));
 
     const actionCount = computed(() =>
         Number(props.button1Visible) + Number(props.button2Visible) + Number(props.button3Visible)
@@ -97,6 +104,7 @@
 <template>
     <div v-if="props.open"
          class="clay-modal-overlay"
+         :class="overlayClasses"
          :style="overlayStyle">
         <ClayCard class="clay-modal-content"
                   :class="contentClasses"
@@ -144,12 +152,13 @@
         --clay-modal-footer-inline-padding: 0.5em;
         --clay-modal-divider-spacing: 0.75em;
         --clay-modal-liquid-glass-blur: 0.5em;
+        --clay-modal-overlay-dimmed-color: rgba(from var(--black) r g b / 0.2);
     }
 
     .clay-modal-overlay
     {
 
-        background-color: var(--clay-modal-overlay-opacity);
+        background-color: transparent;
         bottom: 0;
         left: 0;
         position: fixed;
@@ -160,6 +169,11 @@
         display: flex;
         justify-content: center;
         align-items: center;
+    }
+
+    .clay-modal-overlay--dimmed
+    {
+        background-color: var(--clay-modal-overlay-dimmed-color);
     }
 
     .clay-modal-content

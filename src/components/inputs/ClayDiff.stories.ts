@@ -10,7 +10,7 @@ interface StoryArgs
     alt: string;
     label: string;
     blur: number;
-    variant: "blur" | "glass";
+    variant: "blur" | "glass" | "liquid-glass";
     progress: number;
     size: "small" | "default" | "large";
 }
@@ -78,20 +78,21 @@ const meta: Meta<StoryArgs> = {
         variant: {
             name: "Variant",
             type: { name: "string", required: false },
-            description: "The reveal effect applied to the overlay: a direct blur or a frosted glass pane.",
+            description: "The reveal effect applied to the overlay: a direct blur, a frosted or a liquid glass pane.",
             table: {
                 category: "Component's",
                 defaultValue: { summary: "blur" },
-                type: { summary: "blur | glass" }
+                type: { summary: "blur | glass | liquid-glass" }
             },
             control: {
                 type: "inline-radio",
                 labels: {
-                    blur: "Blur",
-                    glass: "Glass"
+                    "blur": "Blur",
+                    "glass": "Glass",
+                    "liquid-glass": "Liquid glass"
                 }
             },
-            options: ["blur", "glass"]
+            options: ["blur", "glass", "liquid-glass"]
         },
         progress: {
             name: "Progress",
@@ -156,6 +157,7 @@ export const Default: StoryObj<StoryArgs> = {
                              :label="args.label"
                              :blur="args.blur"
                              :glass="args.variant === 'glass'"
+                             :liquid-glass="args.variant === 'liquid-glass'"
                              :small="args.size === 'small'"
                              :large="args.size === 'large'" />`
     })
@@ -165,6 +167,14 @@ export const Glass: StoryObj<StoryArgs> = {
     args: {
         label: "Glass diff",
         variant: "glass"
+    },
+    render: Default.render
+};
+
+export const LiquidGlass: StoryObj<StoryArgs> = {
+    args: {
+        label: "Liquid glass diff",
+        variant: "liquid-glass"
     },
     render: Default.render
 };

@@ -31,6 +31,10 @@
             type: Boolean,
             default: false
         },
+        liquidGlass: {
+            type: Boolean,
+            default: false
+        },
         small: {
             type: Boolean,
             default: false
@@ -42,7 +46,8 @@
     });
 
     const classes = computed((): Record<string, boolean> => ({
-        "clay-diff--glass": props.glass,
+        "clay-diff--glass": props.glass && !props.liquidGlass,
+        "clay-diff--liquid-glass": props.liquidGlass,
         "clay-diff--small": props.small,
         "clay-diff--large": props.large
     }));
@@ -107,6 +112,8 @@
         --clay-diff-glass-tint: rgba(from var(--white) r g b / 0.15);
         --clay-diff-glass-sheen: rgba(from var(--white) r g b / 0.55);
         --clay-diff-glass-shade: rgba(from var(--black) r g b / 0.12);
+        --clay-diff-liquid-highlight: rgba(from var(--white) r g b / 0.7);
+        --clay-diff-liquid-shade: rgba(from var(--black) r g b / 0.25);
         --clay-diff-track-height: 0.625em;
         --clay-diff-thumb-size: 1.5em;
         --clay-diff-motion-duration: 120ms;
@@ -182,7 +189,16 @@
             transform-origin: center;
         }
 
-    .clay-diff--glass // Variante vetro: lastra smerigliata al posto della sfocatura diretta.
+    .clay-diff--glass, // Le varianti vetro rivelano l'immagine base sotto una lastra: la copia sfocata è superflua.
+    .clay-diff--liquid-glass
+        {
+            .clay-diff__image--blur
+                {
+                    display: none;
+                }
+        }
+
+    .clay-diff--glass // Variante vetro
         {
             .clay-diff__overlay // La lastra sfoca l'immagine sottostante e la tinge come vetro.
                 {
@@ -196,13 +212,33 @@
                                 inset 0 -0.0625em 0 0 var(--clay-diff-glass-shade),
                                 inset -0.075em 0 0.25em -0.05em var(--clay-diff-glass-sheen);
                 }
-            .clay-diff__image--blur // L'immagine duplicata è superflua: il vetro rivela quella base.
+        }
+
+    .clay-diff--liquid-glass // Variante vetro liquido
+        {
+            .clay-diff__overlay // La lastra rifrange e satura l'immagine sottostante, tingendola appena.
                 {
-                    display: none;
+                    backdrop-filter: blur(var(--clay-diff-blur-strength)) saturate(200%) brightness(1.1);
+                    background-color: var(--clay-diff-glass-tint);
+
+                    &::after // Riflesso vetroso
+                        {
+                            border-radius: var(--clay-diff-roundness);
+                            background-image: linear-gradient(var(--clay-diff-glass-sheen),
+                                                              rgba(from var(--white) r g b / 0) 45%);
+                            box-shadow:
+                                inset 0 0.08em 0.06em -0.02em var(--clay-diff-liquid-highlight),
+                                inset 0 -0.06em 0.08em -0.02em var(--clay-diff-liquid-shade);
+                            content: "";
+                            inset: 0;
+                            pointer-events: none;
+                            position: absolute;
+                            z-index: 1;
+                        }
                 }
         }
 
-    .clay-diff__splitter // Divisore verticale visibile / traccia della maniglia.
+    .clay-diff__splitter // Divisore verticale visibile
         {
             background-color: rgba(from var(--clay-diff-color-line) r g b / 0.75);
             box-shadow: 0 0 0 2px rgba(from var(--white) r g b / 0.333),
@@ -330,11 +366,16 @@
             {
                 box-shadow: inset 0 0 0 1px CanvasText;
             }
-            .clay-diff--glass .clay-diff__overlay // Lastra di vetro neutralizzata: solo un bordo di separazione.
+            .clay-diff--glass .clay-diff__overlay, // Lastra di vetro neutralizzata: solo un bordo di separazione.
+            .clay-diff--liquid-glass .clay-diff__overlay
             {
                 backdrop-filter: none;
                 background: transparent;
                 box-shadow: inset -1px 0 0 0 CanvasText;
+            }
+            .clay-diff--liquid-glass .clay-diff__overlay::after // Riflesso vetro liquido rimosso in colori forzati.
+            {
+                display: none;
             }
             .clay-diff__splitter // Colore di riserva del divisore.
             {
@@ -362,6 +403,8 @@
             --clay-diff-glass-tint: rgba(from var(--white) r g b / 0.08);
             --clay-diff-glass-sheen: rgba(from var(--white) r g b / 0.3);
             --clay-diff-glass-shade: rgba(from var(--black) r g b / 0.25);
+            --clay-diff-liquid-highlight: rgba(from var(--white) r g b / 0.4);
+            --clay-diff-liquid-shade: rgba(from var(--black) r g b / 0.4);
         }
 
         .clay-diff // Taratura dell'elevazione in modalità scura.

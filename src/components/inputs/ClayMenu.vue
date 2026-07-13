@@ -173,7 +173,9 @@
 
             &::before
             {
-                @include mixins.clay-shadow-puff($color: var(--clay-primary-color));
+                // On the near-white surface, `multiply` with the pastel primary is
+                // barely perceptible; the darker shadow token reads as real depth.
+                @include mixins.clay-shadow-puff($color: var(--clay-menu-color-shadow));
 
                 border-radius: var(--clay-menu-roundness);
                 content: "";
@@ -207,6 +209,7 @@
             font-family: inherit;
             font-size: 1em;
             gap: 0.5em;
+            isolation: isolate;
             outline: none;
             padding: var(--clay-menu-item-spacing);
             position: relative;
@@ -217,6 +220,23 @@
                         box-shadow var(--clay-ease-duration) var(--clay-ease-function),
                         color var(--clay-ease-duration) var(--clay-ease-function),
                         transform var(--clay-ease-duration) var(--clay-ease-function);
+
+            // The lifted item gets the same puffy inner depth as the panel: an
+            // absolutely-positioned layer carrying the inset clay shadows. The
+            // `isolation: isolate` above traps this `z-index: -1` layer *above* the
+            // item's own background (so the highlight fill can't hide it) yet below
+            // the label. Hidden at rest, faded in together with the lift.
+            &::before
+            {
+                border-radius: var(--clay-menu-item-roundness);
+                content: "";
+                inset: 0;
+                mix-blend-mode: multiply;
+                opacity: 0;
+                position: absolute;
+                transition: opacity var(--clay-ease-duration) var(--clay-ease-function);
+                z-index: -1;
+            }
 
             &:not(.clay-menu-item--disabled):hover
             {
@@ -234,6 +254,14 @@
                             0 0.15em 0.3em -0.1em rgba(from var(--clay-menu-item-color-shadow) r g b / 0.4);
 
                 transform: translateY(-0.0625em) scale(1.02);
+            }
+
+            &:not(.clay-menu-item--disabled):hover::before,
+            &:not(.clay-menu-item--disabled):focus-visible::before
+            {
+                @include mixins.clay-shadow-puff($intensity: 0.5, $color: var(--clay-menu-item-color-shadow));
+
+                opacity: 1;
             }
 
             &:not(.clay-menu-item--disabled):active

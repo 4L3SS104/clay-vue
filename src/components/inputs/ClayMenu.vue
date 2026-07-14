@@ -51,9 +51,6 @@
         emit("select", item.value, event);
     };
 
-    // Progressive enhancement: menu items are native links/buttons, so they are
-    // reachable with `Tab` even without JS. When JS runs we additionally wire up
-    // the `ArrowUp`/`ArrowDown`/`Home`/`End` roving expected from a menu widget.
     const _items = (): HTMLElement[] =>
     {
         if (!($el.value)) { return []; }
@@ -173,8 +170,6 @@
 
             &::before
             {
-                // On the near-white surface, `multiply` with the pastel primary is
-                // barely perceptible; the darker shadow token reads as real depth.
                 @include mixins.clay-shadow-puff($color: var(--clay-menu-color-shadow));
 
                 border-radius: var(--clay-menu-roundness);
@@ -221,11 +216,6 @@
                         color var(--clay-ease-duration) var(--clay-ease-function),
                         transform var(--clay-ease-duration) var(--clay-ease-function);
 
-            // The lifted item gets the same puffy inner depth as the panel: an
-            // absolutely-positioned layer carrying the inset clay shadows. The
-            // `isolation: isolate` above traps this `z-index: -1` layer *above* the
-            // item's own background (so the highlight fill can't hide it) yet below
-            // the label. Hidden at rest, faded in together with the lift.
             &::before
             {
                 border-radius: var(--clay-menu-item-roundness);

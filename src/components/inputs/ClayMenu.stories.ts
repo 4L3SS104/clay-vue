@@ -70,7 +70,7 @@ export const Default: StoryObj<StoryArgs> = {
 export const WithLinksAndDisabled: StoryObj<StoryArgs> = {
     args: {
         items: [
-            { label: "Open website", href: "https://byloth.dev", target: "_blank" },
+            { label: "Open website", href: "https://youtu.be/Aq5WXmQQooo?si=Eu6XvysMls138DNDs", target: "_blank" },
             { label: "Settings", value: "settings" },
             { label: "Delete (disabled)", value: "delete", disabled: true }
         ]
